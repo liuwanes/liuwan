@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	
+	<h2><a href="insertAdmin">添加</a></h2>
+	<h2><a href="adminLogin">管理员登陆</a></h2>
 </body>
 </html>

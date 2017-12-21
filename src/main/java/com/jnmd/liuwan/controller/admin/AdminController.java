@@ -1,0 +1,81 @@
+package com.jnmd.liuwan.controller.admin;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.jnmd.liuwan.domain.User;
+import com.jnmd.liuwan.service.UserService;
+
+@Controller
+@Scope("prototype")
+public class AdminController {
+
+	@Resource
+	private UserService userService;
+
+	// 进入机票管理
+	@RequestMapping("/insertAdmin")
+	public String insertAdmin() {
+		return "forward:/WEB-INF/jsp/admin/insert.jsp";
+	}
+
+	// 管理员登陆
+	@RequestMapping("/adminLogin")
+	public String adminLogin() {
+		return "forward:/WEB-INF/jsp/admin/adminLogin.jsp";
+	}
+
+	@RequestMapping("/login")
+	public String login() {
+		return "forward:/WEB-INF/jsp/admin/admin.jsp";
+	}
+
+	// 进入管理员管理用户界面
+	@RequestMapping("/AdminUser")
+	public String AdminUser() {
+		return "forward:/WEB-INF/jsp/admin/adminUser.jsp";
+	}
+
+	// 根据id获得详情
+	@RequestMapping("/{uid}/getUser")
+	public ModelAndView getUser(@PathVariable("uid") int id) {
+		User user = userService.getUser(id);
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("userInfo");
+		mv.addObject("user", user);
+		return mv;
+	}
+
+	
+	//分页查询全部的用户
+	@RequestMapping("/getUsers")
+	public ModelAndView getUsers(HttpServletRequest request){
+		Map<String,Object> map = new HashMap<String,Object>();
+		int pageNum = Integer.parseInt(request.getParameter("pageNum"));
+		int start = (pageNum-1)*6;
+		map.put("start",start);  
+        map.put("pagesize",6);
+		List<User> users = userService.getUsers(map);
+		int maxNum = userService.maxNum();
+		int pageMax = (int)(Math.ceil(maxNum*1.0/6));
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("adminUser");
+		mv.addObject("users", users);
+		mv.addObject("pageNum",pageNum);
+		mv.addObject("pageMax", pageMax);
+		return mv;
+	}
+
+	
+
+}
