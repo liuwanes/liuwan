@@ -19,12 +19,6 @@ public class UserService {
 	@Resource
 	private UserMapper userMapper;
 	
-//	//getUsers
-//	@Transactional(propagation=Propagation.SUPPORTS)
-//	public List<User> getUsers() {
-//		return userMapper.getUsers();
-//	}
-	
 	//getUser
 	@Transactional(propagation=Propagation.SUPPORTS, readOnly=true)
 	public User getUser(int uid) {
@@ -33,14 +27,17 @@ public class UserService {
 
 	@Transactional(propagation=Propagation.SUPPORTS)
 	public List<User> getUsers(Map<String, Object> map) {
-		
 		return userMapper.getUsers(map);
 	}
 
 	@Transactional(propagation=Propagation.SUPPORTS)
 	public int maxNum() {
-		
 		return userMapper.maxNum();
+	}
+	
+	@Transactional(propagation=Propagation.SUPPORTS)
+	public List<User> getAllTime(Map<String,Object> map) {
+		return userMapper.getAllTime(map);
 	}
 
 

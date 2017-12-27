@@ -2,9 +2,9 @@ package com.jnmd.liuwan.domain;
 
 public class Admin {
 
-	private int id;
-	private String userName;
-	private String password;
+	private int id;   //管理员id
+	private String userName;	//管理员用户姓名
+	private String password;	//管理员密码
 	public Admin() {
 		super();
 		// TODO Auto-generated constructor stub

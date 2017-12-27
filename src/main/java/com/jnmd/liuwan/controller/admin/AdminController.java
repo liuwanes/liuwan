@@ -1,5 +1,8 @@
 package com.jnmd.liuwan.controller.admin;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,26 +59,43 @@ public class AdminController {
 		return mv;
 	}
 
-	
-	//分页查询全部的用户
+	//根据时间范围查询user用户
+	@RequestMapping("/getAllTime")
+	public ModelAndView getAllTime(HttpServletRequest request) throws ParseException{
+		  String s=request.getParameter("start");
+		  String e=request.getParameter("end");
+		  SimpleDateFormat  formatter=new SimpleDateFormat("yyyy-MM-dd");
+		  Date  start=formatter.parse(s);
+		  Date  end=formatter.parse(e);
+		  Map<String,Object> map =new HashMap<String,Object>();
+		  map.put("start", start);
+		  map.put("end", end);
+		  List<User> users = userService.getAllTime(map);
+		  System.out.println(users);
+	      ModelAndView mv = new ModelAndView();
+	      mv.setViewName("timeUser");
+	      mv.addObject("users", users);
+	      return mv;
+	}
+
+	// 分页查询全部的用户
 	@RequestMapping("/getUsers")
-	public ModelAndView getUsers(HttpServletRequest request){
-		Map<String,Object> map = new HashMap<String,Object>();
+	public ModelAndView getUsers(HttpServletRequest request) {
+		Map<String, Object> map = new HashMap<String, Object>();
 		int pageNum = Integer.parseInt(request.getParameter("pageNum"));
-		int start = (pageNum-1)*6;
-		map.put("start",start);  
-        map.put("pagesize",6);
+		int start = (pageNum - 1) * 6;
+		map.put("start", start);
+		map.put("pagesize", 6);
 		List<User> users = userService.getUsers(map);
+		System.out.println(users);
 		int maxNum = userService.maxNum();
-		int pageMax = (int)(Math.ceil(maxNum*1.0/6));
+		int pageMax = (int) (Math.ceil(maxNum * 1.0 / 6));
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("adminUser");
 		mv.addObject("users", users);
-		mv.addObject("pageNum",pageNum);
+		mv.addObject("pageNum", pageNum);
 		mv.addObject("pageMax", pageMax);
 		return mv;
 	}
-
-	
 
 }

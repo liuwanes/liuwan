@@ -1,25 +1,95 @@
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>书籍库存登记系统</title>
+<title>遛弯</title>
 <link href="css/reset.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
 table {
 	border-collapse: collapse;
 	text-align: center;
 }
+#box{
+	color: red;
+};
+
 </style>
+<style type="text/css">
+#div1 {
+    width: 73px;
+    height: 38px;
+    border-radius: 50px;
+    position: relative;
+}
+
+#div2 {
+    width: 36px;
+    height: 33px;
+    border-radius: 48px;
+    position: absolute;
+    background: white;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.open1 {
+	background: rgba(0, 184, 0, 0.8);
+}
+
+.open2 {
+	top: 2px;
+	right: 1px;
+}
+
+.close1 {
+	background: rgba(255, 255, 255, 0.4);
+	border: 3px solid rgba(0, 0, 0, 0.15);
+	border-left: transparent;
+}
+
+.close2 {
+	left: 0px;
+	top: 0px;
+	border: 2px solid rgba(0, 0, 0, 0.1);
+}
+</style>
+    <script type="text/javascript">
+    	window.onload=function(){
+        var div2=document.getElementById("div2");
+        var div1=document.getElementById("div1");
+        div2.onclick=function(){
+          div1.className=(div1.className=="close1")?"open1":"close1";
+          div2.className=(div2.className=="close2")?"open2":"close2";
+        }
+    }
+    </script>
 </head>
 <body>
-	<center>
-		<h2>获取全部的用户信息</h2>
-	</center>
+	<%
+	    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+	    String date= format.format(new Date());
+	%>
 
-	<table
-		style="border: 1px solid black; cellspacing: 0; cellpadding: 0; margin: 0 auto; width: 600px;">
+	<center>
+		<h1>获取全部的用户信息</h1>
+	</center>
+	<div id="box">
+	<center>
+		<h3>你可以根据时间范围查询用户</h3>
+		<form action="getAllTime">
+		开始：<input type="date"  name="start" value="<%=date %>" />
+		至：<input type="date"  name="end" value="<%=date %>" />
+		 <input type="submit" value="查询">
+		</form>
+		<br>
+	</center>
+	</div>
+	<br>
+	<table style="border: 1px solid black; cellspacing: 0; cellpadding: 0; margin: 0 auto; width: 600px;">
 		<tr>
 			<td style="border: 1px solid black">用户编号</td>
 			<td style="border: 1px solid black">用户昵称</td>
@@ -32,7 +102,11 @@ table {
 				<td style="border: 1px solid black">${user.uname}</td>
 				<td style="border: 1px solid black"><a
 					href="${user.uid }/getUser">详情</a></td>
-				<td style="border: 1px solid black"></td>
+				<td style="border: 1px solid black">
+					 <div id="div1" class="open1">
+        				<div id="div2" class="open2"></div>
+    				</div>
+				</td>
 			<tr>
 		</c:forEach>
 	</table>
@@ -53,10 +127,7 @@ table {
 		</c:if>
 		<a href=" <% request.getContextPath();%>getUsers?pageNum=${pageMax }">尾页</a>&nbsp;&nbsp;&nbsp;
 	</h3>
-</center>
-
-	
-
+	</center>
 </body>
 </html>
 
