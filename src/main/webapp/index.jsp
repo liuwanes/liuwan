@@ -5,6 +5,26 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 20px;
+    display:block;
+    
+    width: 180px;
+    height: 50px;
+    margin: 100px auto;
+    text-align: center;
+    line-height: 50px;
+    background: #5BC0DE;
+    border-radius: 10px;
+}
+
+h2 {
+    
+}
+</style>
 </head>
 <body>
 	<h2><a href="insertAdmin">添加</a></h2>

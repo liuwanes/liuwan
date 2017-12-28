@@ -8,7 +8,7 @@
 	<select id="maxNum" resultType="int">
 		select count(*) from user
 	</select>
-	
+
 	<!-- 根据uid查询user的信息 -->
 	<select id="getUser" resultType="User">
 		select uid, uname, birthday
@@ -19,23 +19,23 @@
 	
 	<!-- 分页查询全部的user用户信息 -->
 	<resultMap type="com.jnmd.liuwan.domain.User" id="users">
-		<id property="uid" column="uid" />
-		<result property="uname" column="uname" />
-		<result property="password" column="password" />
-		<result property="countrycode" column="countrycode" />
-		<result property="birthday" column="birthday" />
-		<result property="realname" column="realname" />
-		<result property="sex" column="sex" />
-		<result property="tid" column="tid" />
-		<result property="papersid" column="papersid" />
+		<id property="uid" column="uid"/>
+         <result property="uname" column="uname"/>
+         <result property="password" column="password"/>
+         <result property="countrycode" column="countrycode"/>
+         <result property="birthday" column="birthday"/>
+         <result property="realname" column="realname"/>
+         <result property="sex" column="sex"/>
+         <result property="tid" column="tid"/>
+         <result property="papersid" column="papersid"/>
 	</resultMap>
 	<select id="getUsers" resultType="User" resultMap="users">
 		select *from
 		user
 		where uid=uid
-		limit #{start},#{pagesize}
+		limit #{start},#{pagesize} 
 	</select>
-	
+		
 	<!-- 根据传输的时间值查询数据 -->
 	<select id="getAllTime" parameterType="Map" resultType="User" resultMap="users">
 		select * from user where birthday between #{start } and #{end }

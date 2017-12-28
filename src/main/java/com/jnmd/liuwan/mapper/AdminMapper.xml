@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jnmd.liuwan.mapper.AdminMapper">
+	<select id="getairport" resultType="PlaneAirport">
+		select *
+		from plane_airport
+	</select>
+	<select id="getprovince" resultType="Province">
+		select *
+		from province
+	</select>
+	
+	<select id="getplanecompany" resultType="PlaneCompany">
+		select *
+		from plane_company
+	</select>
+	<select id="getplaneoil" resultType="PlaneOil">
+		select *
+		from plane_oil
+	</select>
+	<insert id="insertPlane">
+		<selectKey keyColumn="pmid" keyProperty="pmid" order="AFTER" resultType="int">
+			select @@identity as pmid
+		</selectKey>
+		insert into plane_msg(pmfight,pmstartcity,pmendcity,pmstarttime,pmendtime,pmprice,pcid,poid)
+		values(#{pmfight},#{pmstartcity},#{pmendcity},#{pmstarttime},#{pmendtime},#{pmprice},#{pcid},#{poid})
+	</insert>
+	
+	<!-- 查询全部的page数 -->
+	<select id="maxNum" resultType="int">
+		select count(*) from plane_msg
+	</select>
+	<!-- 分页查询全部的机票用户信息 -->
+	<resultMap type="com.jnmd.liuwan.domain.Admininsert" id="Admininserts">
+		<id property="pmid" column="pmid"/>
+         <result property="pmfight" column="pmfight"/>
+         <result property="pmstartcity" column="pmstartcity"/>
+         <result property="pmendcity" column="pmendcity"/>
+         <result property="pmstarttime" column="pmstarttime"/>
+         <result property="pmendtime" column="pmendtime"/>
+         <result property="pmprice" column="pmprice"/>
+         <result property="pcid" column="pcid"/>
+         <result property="poid" column="poid"/>
+         
+         <result property="pacity" column="pacity"/>
+         <result property="cityname" column="cityname"/>
+         <result property="pcname" column="pcname"/>
+         <result property="pooil" column="pooil"/>
+	</resultMap>
+	<select id="getAdmininserts" resultType="Admininsert" resultMap="Admininserts">
+		select * from
+		plane_msg
+		limit #{start},#{pagesize}
+	</select>
+	
+	<!-- 修改机票信息 -->
+	<select id="getredact" resultType="com.jnmd.liuwan.domain.Admininsert">
+		select *
+		from plane_msg
+		where pmid=#{pmid}
+	</select>
+	
+	<!-- 更新数据库的语句 -->
+	<update id="updateplane" parameterType="com.jnmd.liuwan.domain.Admininsert">
+		update 
+			plane_msg
+		set 
+			pmfight=#{pmfight},
+			pmstartcity=#{pmstartcity},
+			pmendcity=#{pmendcity},
+			pmstarttime=#{pmstarttime},
+			pmendtime=#{pmendtime},
+			pmprice=#{pmprice},
+			pcid=#{pcid},
+			poid=#{poid}
+		where 
+			pmid=#{pmid}
+	</update>
+	
+	<!-- 根据传输的时间值查询数据 -->
+	<select id="getAllTimes" parameterType="Map" resultType="Admininsert" resultMap="Admininserts">
+		select * from plane_msg where pmstarttime between #{start } and #{end }
+	</select>
+	
+	<!-- 删除机票信息 -->
+	<delete id="getDeletes">
+		delete from plane_msg where pmid=#{pmid}
+	</delete>
+
+</mapper>

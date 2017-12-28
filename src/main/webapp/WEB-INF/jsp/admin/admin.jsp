@@ -25,5 +25,9 @@ a:hover{
 		<li><a href="getUsers?pageNum=1">获取全部的用户的信息</a></li>
 	</ul>
 	<a href="#"><h2>机票管理</h2></a>
+	<ul>
+		<li><a href="getAdmininserts?pageNum=1">获取全部的机票信息</a></li>
+		<li><a href="getairports">添加机票信息</a></li>
+	</ul>
 </body>
 </html>

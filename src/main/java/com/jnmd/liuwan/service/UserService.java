@@ -36,10 +36,8 @@ public class UserService {
 	}
 	
 	@Transactional(propagation=Propagation.SUPPORTS)
-	public List<User> getAllTime(Map<String,Object> map) {
-		return userMapper.getAllTime(map);
-	}
-
-
+        public List<User> getAllTime(Map<String,Object> map) {
+                return userMapper.getAllTime(map);
+        }
 
 }

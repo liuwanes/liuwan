@@ -9,15 +9,28 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>遛弯</title>
 <link href="css/reset.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap.min.css" rel="stylesheet">
 <style type="text/css">
 table {
 	border-collapse: collapse;
 	text-align: center;
 }
-#box{
-	color: red;
-};
 
+#box {
+	color: #F1970A;
+}
+
+.start, .end {
+	border-radius: 5px;
+}
+.sub {
+	border: 0;
+	width: 60px;
+	height: 30px;
+	line-height: 30px;
+	background-color: #F1970A;
+	border-radius: 5px;
+}
 </style>
 <style type="text/css">
 #div1 {
@@ -77,13 +90,13 @@ table {
 	<center>
 		<h1>获取全部的用户信息</h1>
 	</center>
-	<div id="box">
+	<div>
 	<center>
-		<h3>你可以根据时间范围查询用户</h3>
+		<h3 id="box">你可以根据时间范围查询用户</h3>
 		<form action="getAllTime">
-		开始：<input type="date"  name="start" value="<%=date %>" />
-		至：<input type="date"  name="end" value="<%=date %>" />
-		 <input type="submit" value="查询">
+		开始：<input type="date"  name="start" value="<%=date %>"  class="start"/>
+		至：<input type="date"  name="end" value="<%=date %>"  class="end"/>
+		 <input type="submit" value="查询" class="sub">
 		</form>
 		<br>
 	</center>
@@ -110,6 +123,9 @@ table {
 			<tr>
 		</c:forEach>
 	</table>
+	<center>
+		<h5>当前第：${pageNum}页，总共：${pageMax}页</h5>
+	</center>
 	<center>
 	<h3>
 		<a href="<% request.getContextPath();%>getUsers?pageNum=1">首页</a>&nbsp;&nbsp;&nbsp;
